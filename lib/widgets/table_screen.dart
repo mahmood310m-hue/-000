@@ -1,3 +1,4 @@
+// ignore_for_file: deprecated_member_use
 import 'package:flutter/material.dart';
 import '../core/api.dart';
 import '../core/common.dart';
@@ -379,6 +380,7 @@ class _RecordEditorState extends State<RecordEditor> {
         final o = opts[f.key] ?? [];
         final cur = o.any((e) => e.key == vals[f.key]) ? vals[f.key] as String : null;
         return DropdownButtonFormField<String>(
+         // ignore: deprecated_member_use 
           value: cur,
           isExpanded: true,
           decoration: InputDecoration(labelText: f.label),
