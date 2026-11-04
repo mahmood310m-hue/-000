@@ -1,18 +1,15 @@
-name: Flutter Build & Release
+name: Build Flutter APK
 
 on:
   push:
-    branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
+    branches: [ main ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+    - uses: actions/checkout@v3
 
     - name: Set up Java
       uses: actions/setup-java@v3
@@ -23,33 +20,11 @@ jobs:
     - name: Set up Flutter
       uses: subosito/flutter-action@v2
       with:
+        flutter-version: '3.19.x'
         channel: 'stable'
 
-    - name: Install dependencies
+    - name: Install Dependencies
       run: flutter pub get
 
-    - name: Check secrets
-      run: |
-        if [ -z "${{ secrets.SUPABASE_URL }}" ] || [ -z "${{ secrets.SUPABASE_ANON_KEY }}" ]; then
-          echo "Error: Add SUPABASE_URL and SUPABASE_ANON_KEY in Settings > Secrets and variables > Actions"
-          exit 1
-        fi
-
-    - name: Analyze
-      run: flutter analyze --no-fatal-infos --no-fatal-warnings
-      continue-on-error: true
-
-    - name: Build release APK
-      run: |
-        flutter build apk --release \
-          --dart-define=SUPABASE_URL="${{ secrets.SUPABASE_URL }}" \
-          --dart-define=SUPABASE_ANON_KEY="${{ secrets.SUPABASE_ANON_KEY }}" \
-          --dart-define=COUNTRY_CODE="${{ vars.COUNTRY_CODE || '964' }}" \
-          --dart-define=AUTH_MODE="${{ vars.AUTH_MODE || 'phone' }}"
-
-    - name: Upload APK Artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: kauthar-school-apk
-        path: build/app/outputs/flutter-apk/app-release.apk
-        retention-days: 30
+    - name: Build Debug APK
+      run: flutter build apk --debug
