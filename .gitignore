@@ -1,0 +1,29 @@
+# Flutter / Dart
+.dart_tool/
+.packages
+.pub-cache/
+.pub/
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+pubspec.lock
+
+# Android (يُولَّد تلقائياً أثناء البناء)
+android/
+ios/
+web/
+linux/
+macos/
+windows/
+*.iml
+.idea/
+.vscode/
+local.properties
+key.properties
+*.jks
+*.keystore
+
+# أسرار
+.env
+*.env
+secrets.json
