@@ -5,6 +5,20 @@ plugins {
 }
 
 android {
+    signingConfigs {
+    create("release") {
+        storeFile = file("debug.keystore")
+        storePassword = "android"
+        keyAlias = "androiddebugkey"
+        keyPassword = "android"
+    }
+}
+
+buildTypes {
+    getByName("release") {
+        signingConfig = signingConfigs.getByName("release")
+    }
+}
     namespace = "com.example.kauthar_school"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
